@@ -1,10 +1,11 @@
-import os.path
+import os
 import re
 
 import requests
 from bs4 import BeautifulSoup
 
 from data import Webtoon
+from data.webtoon import WebtoonNotExist
 
 
 class Crawler:

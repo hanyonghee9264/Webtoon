@@ -41,7 +41,23 @@ class Webtoon:
             에피소드 상세 URL에서의 'no' GET parameter값에 해당
             https://comic.naver.com/webtoon/detail.nhn?titleId=651673&no=345&weekday=wed
         webtoon_dict를 채울때와 비슷하게, 새로운 Episode클래스 인스턴스를 만들어 할당
-        page값을 1부터 늘려가면서 '다음'버튼이 안보일때까지 내용을 가져옴
+
+        1. 현재는 1페이지 내용만 불러오므로
+           page값을 1부터 늘려가면서 '다음'버튼이 안보일때까지 내용을 가져옴 (페이지수가 적은 웹툰으로 테스트!)
+        2. pickle을 사용해서 Crawler가 가진 webtoon_dict를 저장, 불러오기 하는 방식으로 중복 데이터를 웹에서 받지 않도록 함
+        3. CLI를 구성해서 사용자가 셀에서 선택해서 웹툰 크롤러 기능을 사용할 수 있도록 만들기 (main.py)
+        4. Episode의 Detail페이지에서 그림을 다운로드 받기
+             requests로 그림 요청시 Referer설정을 해줘야 함 <-- 아니면 403또는 400dpfj qkftod
+                 headers = {'Referer': http://comic.naver.com/webtoon/list.nhn?titleId=<WebtoonID>'}
+                 requests.get(<URL>, headers=headers)
+
+             저장시
+                 response = requests.get(<URL>)
+                 open(<path>, 'wb').write(response.content)
+             코드를 사용
+        5. 다운로드 받은 그림을 볼 수 있는 HTML사용하기
+
+
         :return:
         """
 

@@ -33,7 +33,7 @@ class Webtoon:
         #     get_epi..(page=1)로 호출시 리턴:
         #       {'titleId': 234234, 'page': 1}
         params = {'titleId': self.webtoon_id}
-        params.update(kwargs)  # update ==> 딕셔너리, 튜플 덮어 쓰기
+        params.update(kwargs)
         return params
 
     @property
@@ -64,7 +64,6 @@ class Webtoon:
         5. 다운로드 받은 그림을 볼 수 있는 HTML생성하기
         :return:
         """
-
         def get_page_episode_dict(page):
             """
             :param page: 크롤링 할 페이지
@@ -123,18 +122,19 @@ class Webtoon:
             # 1페이지부터 끝페이지까지 get_page_episode_dict를 실행한 결과를 self._episode_dict에 추가
             page = 1
             while True:
-                # while문을 반복하여 증가되는 page값을 사용해서 크롤링한 결과 dict및 다음 페이지 존재여부를 가져옴
+                # while문을 반복하며 증가되는 page값을 사용해서 크롤링한 결과 dict및 다음 페이지 존재여부를 가져옴
                 result = get_page_episode_dict(page)
-                get_page_episode_dict = result['episode_dict']
+                page_episode_dict = result['episode_dict']
                 # 결과 dict를 인스턴스의 _episode_dict에 업데이트
-                self._episode_dict.update(get_page_episode_dict)
+                self._episode_dict.update(page_episode_dict)
                 # 다음 loop에서 증가한 page값을 사용하기 위해 값 설정
                 page += 1
 
-                # 결과에 다음 페이지 존재여부를 판단, 없다면 break로 반복문 탈출
+                # 결과에서 다음 페이지 존재여부를 판단, 없다면 break로 반복문 탈출
                 has_next = result['has_next']
                 if not has_next:
                     break
+            print(f'== {self.title}의 에피소드 목록을 크롤링 ==')
         return self._episode_dict
 
     def get_episode(self, index):

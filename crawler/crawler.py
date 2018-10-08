@@ -4,7 +4,7 @@ import re
 import requests
 from bs4 import BeautifulSoup
 
-from data import Episode, Webtoon, WebtoonNotExist
+from data import Webtoon, WebtoonNotExist
 
 
 class Crawler:
@@ -82,5 +82,5 @@ class Crawler:
 
 if __name__ == '__main__':
     crawler = Crawler()
-    w = crawler.get_webtoon('유미의 세포들')
+    w = crawler.get_webtoon('자취로운 생활')
     print(w.episode_dict)
